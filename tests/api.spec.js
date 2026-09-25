@@ -1,21 +1,23 @@
  import { test, expect } from '@playwright/test';
 
-// test('GET Users API', async ({ request }) => {
+ //GET API
 
-//     const response = await request.get(
-//         'https://reqres.in/api/users?page=2'
-//     );
+test('GET Users API', async ({ request }) => {
 
-//     expect(response.status()).toBe(200);
+    const response = await request.get(
+        'https://reqres.in/api/users?page=2'
+    );
 
-//     const responseBody = await response.json();
+    expect(response.status()).toBe(200);
 
-//     console.log(responseBody);
+    const responseBody = await response.json();
 
-//     expect(responseBody.page).toBe(2);
-// });
+    console.log(responseBody);
 
+    expect(responseBody.page).toBe(2);
+});
 
+//POST API
 
 test('Create User API', async ({ request }) => {
 
@@ -37,4 +39,47 @@ test('Create User API', async ({ request }) => {
 
     expect(responseBody.name).toBe('Navin');
     expect(responseBody.job).toBe('Automation Tester');
+});
+
+
+
+//PUT API
+
+test('Update User API', async ({ request }) => {
+
+    const response = await request.put(
+        'https://reqres.in/api/users/2',
+        {
+            data: {
+                name: 'Navin',
+                job: 'Senior Automation Tester'
+            }
+        }
+    );
+
+    expect(response.status()).toBe(200);
+
+    const responseBody = await response.json();
+
+    console.log(responseBody);
+
+    expect(responseBody.name).toBe('Navin');
+    expect(responseBody.job).toBe('Senior Automation Tester');
+    expect(responseBody.updatedAt).toBeTruthy();
+
+});
+
+
+//DELETE API
+
+test('Delete User API', async ({ request }) => {
+
+    const response = await request.delete(
+        'https://reqres.in/api/users/2'
+    );
+
+    console.log('Status Code:', response.status());
+
+    expect(response.status()).toBe(204);
+
 });
