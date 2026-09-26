@@ -1,14 +1,15 @@
-import { test } from '@playwright/test';
+import { test, expect } from '../fixtures/pagesFixture.js';
 import users from '../test-data/users.json';
-import { LoginPage } from '../pages/LoginPage.js';
-import { InventoryPage } from '../pages/InventoryPage.js';
 
-test('Add Backpack To Cart', async ({ page }) => {
+test.beforeEach(async ({ page }) => {
+    await page.goto('/');
+});
+  
 
-    await page.goto('https://www.saucedemo.com/');
-
-    const loginPage = new LoginPage(page);
-    const inventoryPage = new InventoryPage(page);
+test('@smoke Add Backpack To Cart', async ({  
+    loginPage,
+    inventoryPage
+     }) => {
 
     await loginPage.login(
         users.validUser.username,

@@ -1,14 +1,15 @@
-import {test} from '@playwright/test';
-import users from '../test-data/users.json';    
-import {LoginPage} from '../pages/LoginPage.js';
-import {InventoryPage} from '../pages/InventoryPage.js';    
+import { test, expect } from '../fixtures/pagesFixture.js';
+import users from '../test-data/users.json';
 
-test('Valid Login Test', async ({ page }) => {
-
-    await page.goto('https://www.saucedemo.com/');
-
-    const loginPage = new LoginPage(page);
-    const inventoryPage = new InventoryPage(page);
+test.beforeEach(async ({ page }) => {
+    await page.goto('/');
+});
+  
+test('@smoke valid login test', async ({
+   
+    loginPage,
+    inventoryPage,
+}) => {
 
     await loginPage.login(
         users.validUser.username,
@@ -18,5 +19,8 @@ test('Valid Login Test', async ({ page }) => {
     await inventoryPage.verifyPageTitle();
     await inventoryPage.addBackpackToCart();
     await inventoryPage.verifyRemoveBackpackButton();
+
+
+
 
 });
