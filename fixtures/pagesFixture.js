@@ -10,60 +10,67 @@ import users from '../test-data/users.json';
 export const test = base.extend({
 
     loginPage: async ({ page }, use) => {
+        await page.goto('/');
         await use(new LoginPage(page));
     },
 
     inventoryPage: async ({ page }, use) => {
-        const loginPage = new LoginPage(page);
-        await page.goto('/');
 
-        await loginPage.login(
-            users.validUser.username,
-            users.validUser.password
-        );
-        await use(new InventoryPage(page));
-    },
+    const loginPage = new LoginPage(page);
+
+    await page.goto('/');
+
+    await loginPage.login(
+        users.validUser.username,
+        users.validUser.password
+    );
+
+    await use(new InventoryPage(page));
+},
 
     cartPage: async ({ page }, use) => {
-        const loginPage = new LoginPage(page);
-        const inventoryPage = new InventoryPage(page);
-        await page.goto('/');
 
-        await loginPage.login(
-            users.validUser.username,
-            users.validUser.password
-        );
-        
-        await inventoryPage.verifyPageTitle();
-        await inventoryPage.addBackpackToCart();
-        await inventoryPage.verifyRemoveBackpackButton();
+    const loginPage = new LoginPage(page);
+    const inventoryPage = new InventoryPage(page);
 
-        await use(new CartPage(page));
-    },
+    await page.goto('/');
+
+    await loginPage.login(
+        users.validUser.username,
+        users.validUser.password
+    );
+
+    await inventoryPage.verifyPageTitle();
+    await inventoryPage.addBackpackToCart();
+    await inventoryPage.verifyRemoveBackpackButton();
+
+    await use(new CartPage(page));
+},
 
     checkoutPage: async ({ page }, use) => {
-        const loginPage = new LoginPage(page);
-        const inventoryPage = new InventoryPage(page);
-        const cartPage = new CartPage(page);
-        await page.goto('/');
 
-        await loginPage.login(
-            users.validUser.username,
-            users.validUser.password
-        );
-        
-        await inventoryPage.verifyPageTitle();
-        await inventoryPage.addBackpackToCart();
-        await inventoryPage.verifyRemoveBackpackButton();
+    const loginPage = new LoginPage(page);
+    const inventoryPage = new InventoryPage(page);
+    const cartPage = new CartPage(page);
 
-       await cartPage.clickCartIcon();
-       await cartPage.verifyPageTitle();
-       await cartPage.verifyCartItem();
-       await cartPage.verifyCartItemName();
+    await page.goto('/');
 
-        await use(new CheckoutPage(page));
-    }
+    await loginPage.login(
+        users.validUser.username,
+        users.validUser.password
+    );
 
+    await inventoryPage.verifyPageTitle();
+    await inventoryPage.addBackpackToCart();
+    await inventoryPage.verifyRemoveBackpackButton();
+
+    await cartPage.clickCartIcon();
+    await cartPage.verifyPageTitle();
+    await cartPage.verifyCartItem();
+    await cartPage.verifyCartItemName();
+
+    await use(new CheckoutPage(page));
+},
 });
 
 export { expect } from '@playwright/test';

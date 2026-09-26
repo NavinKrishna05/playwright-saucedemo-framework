@@ -1,12 +1,7 @@
 import { test,expect } from '../fixtures/pagesFixture.js';
 
-test.beforeEach(async ({ page }) => {
-    await page.goto('/');
-});
 
-
-
-test('@smaoke Verify Backpack In Cart', async ({
+test('@smoke Verify Backpack In Cart', async ({
     cartPage
 }) => {
 

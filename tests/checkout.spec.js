@@ -1,9 +1,6 @@
 import { test, expect } from '../fixtures/pagesFixture.js';
 import users from '../test-data/users.json';
 
-test.beforeEach(async ({ page }) => {
-    await page.goto('/');
-});
 test('@regression Verify Checkout Process', async ({
     checkoutPage
 }) => {

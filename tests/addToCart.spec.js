@@ -1,13 +1,8 @@
-import { test, expect } from '../fixtures/pagesFixture.js';
+import { test } from '../fixtures/pagesFixture.js';
 
-test.beforeEach(async ({ page }) => {
-    await page.goto('/');
-});
-  
-
-test('@smoke Add Backpack To Cart', async ({  
+test('@smoke Add Backpack To Cart', async ({
     inventoryPage
-     }) => {
+}) => {
 
     await inventoryPage.verifyPageTitle();
 
@@ -18,5 +13,4 @@ test('@smoke Add Backpack To Cart', async ({
     await inventoryPage.removeBackpackFromCart();
 
     await inventoryPage.verifyAddBackpackButton();
-
 });
