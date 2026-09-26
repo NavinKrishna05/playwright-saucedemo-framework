@@ -4,20 +4,24 @@ import users from '../test-data/users.json';
 test.beforeEach(async ({ page }) => {
     await page.goto('/');
 });
-
-test('@smoke Login And Add To Cart Test', async ({
-    page,
-    loginPage,
-    inventoryPage,
+test('@regression Verify Checkout Process', async ({
+    checkoutPage
 }) => {
 
-    await loginPage.login(
-        users.validUser.username,
-        users.validUser.password
+ 
+    await checkoutPage.clickCheckoutButton();
+
+    await checkoutPage.fillCheckoutInformation(
+        users.checkoutUser.firstName,
+        users.checkoutUser.lastName,
+        users.checkoutUser.postalCode
     );
 
-    await inventoryPage.verifyPageTitle();
-    await inventoryPage.addBackpackToCart();
-    await inventoryPage.verifyRemoveBackpackButton();
+    await checkoutPage.clickContinueButton();
 
+    await checkoutPage.clickFinishButton();
+
+    await checkoutPage.verifycompleteTitle();
+
+    await checkoutPage.verifysuccessMessage();
 });
